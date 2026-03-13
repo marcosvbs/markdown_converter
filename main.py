@@ -5,18 +5,18 @@ ROOT_INPUT_PATH = "source_docs"
 ROOT_OUTPUT_PATH = "converted_docs"
 
 def clear_markdown(markdown_text):
+    # Cleans empty lines and trims whitespace
     clean_markdown = [line.strip() for line in markdown_text.split("\n") if line.strip()]
-
     return "\n".join(clean_markdown)
 
-def converter_documento(doc_name):
+def convert_document(doc_name):
     doc_path = f"{ROOT_INPUT_PATH}/{doc_name}"
 
     if not os.path.exists(doc_path):
-        print(f"❌ Erro: O arquivo '{doc_path}' não foi encontrado.")
+        print(f"❌ Error: The file '{doc_path}' was not found.\n")
         return
 
-    print(f"⏳ Processando '{doc_path}'... Isso pode levar alguns segundos.")
+    print(f"⏳ Processing '{doc_path}'... This may take a few seconds.\n")
 
     try:
         raw_markdown_content = pymupdf4llm.to_markdown(doc_path)
@@ -29,20 +29,22 @@ def converter_documento(doc_name):
         with open(output_path, "w", encoding="utf-8") as converted_doc:
             converted_doc.write(final_markdown_content)
         
-        print(f"✅ Concluído! O arquivo '{output_doc_name}' está pronto para ser usado na IA.")
+        print(f"✅ Success! The file '{output_doc_name}' is ready for AI use.\n")
 
-    except Exception as erro:
-        print(f"⚠️ Houve um erro na conversão: {erro}")
+    except Exception as error:
+        print(f"⚠️ An error occurred during conversion: {error}\n")
 
 
 def main():
     doc_name = ''
 
     while doc_name != '0':
-        doc_name = input("Enter a document name and format or 0 to stop the program: ")
+        doc_name = input("Enter a document name (with extension) or 0 to exit: ")
+
+        print("\n")
 
         if doc_name != '0':
-            converter_documento(doc_name)
+            convert_document(doc_name)
 
-main()
-    
+if __name__ == "__main__":
+    main()
