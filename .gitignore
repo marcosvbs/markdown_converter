@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+source_docs/*
+!source_docs/.gitkeep
+
+converted_docs/*
+!converted_docs/.gitkeep
